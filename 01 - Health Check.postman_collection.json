@@ -1,0 +1,51 @@
+{
+  "info": {
+    "_postman_id": "1bd6f27f-55b9-42ff-8e03-6c7670d45f8b",
+    "name": "01 - Health Check",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59383421",
+    "_collection_link": "https://go.postman.co/collection/59383421-1bd6f27f-55b9-42ff-8e03-6c7670d45f8b?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get /ping",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code harus 201 Created\", function () {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\npm.test(\"Response body harus berisi Created\", function () {\r\n    pm.expect(pm.response.text()).to.eql(\"Created\");\r\n});\r\n\r\npm.test(\"Response time di bawah 5 detik\", function () {\r\n    pm.expect(pm.response.responseTime).to.be.below(5000);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://restful-booker.herokuapp.com/ping",
+          "protocol": "https",
+          "host": [
+            "restful-booker",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "ping"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

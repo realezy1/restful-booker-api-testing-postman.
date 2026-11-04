@@ -1,0 +1,131 @@
+{
+  "info": {
+    "_postman_id": "17b16755-634a-4373-9d93-ac84ad2e958e",
+    "name": "02 - Authentication",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59383421",
+    "_collection_link": "https://go.postman.co/collection/59383421-17b16755-634a-4373-9d93-ac84ad2e958e?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "/Auth - Valid Credential",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status Kode harus 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Response harus berupa JSON\", function () {\r\n    pm.response.to.be.json;\r\n});\r\n\r\nconst response = pm.response.json();\r\n\r\npm.test(\"Response memiliki token\", function () {\r\n    pm.expect(response).to.have.property(\"token\");\r\n});\r\n\r\npm.test(\"Token harus berupa string\", function () {\r\n    pm.expect(response.token).to.be.a(\"string\");\r\n});\r\n\r\npm.test(\"Token tidak boleh kosong\", function () {\r\n    pm.expect(response.token).to.not.be.empty;\r\n});\r\n\r\nif (pm.response.code === 200 && response.token) {\r\n    pm.environment.set(\"token\", response.token);\r\n    console.log(\"Token berhasil disimpan ke Environment.\");\r\n}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"password123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://restful-booker.herokuapp.com/auth",
+          "protocol": "https",
+          "host": [
+            "restful-booker",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "auth"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/Auth - Wrong Credential",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status kode harus 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Response memiliki reason\", function(){\r\n    const response = pm.response.json();\r\n\r\n    pm.expect(response).to.have.property(\"reason\");\r\n});\r\n\r\npm.test(\"Response harus memiliki bad credential\", function(){\r\n    const response = pm.response.json();\r\n\r\n    pm.expect(response.reason).to.eql(\"Bad credentials\");\r\n});\r\n\r\npm.test(\"Response tidak boleh memiliki token\", function(){\r\n    const response = pm.response.json();\r\n\r\n    pm.expect(response).to.not.have.property(\"token\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"wrongpass\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://restful-booker.herokuapp.com/auth",
+          "protocol": "https",
+          "host": [
+            "restful-booker",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "auth"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/Auth - Missing Credential",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code harus 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Response harus berupa JSON\", function () {\r\n    const response = pm.response.json();\r\n\r\n    pm.expect(response).to.be.an(\"object\");\r\n});\r\n\r\npm.test(\"Response memiliki properti reason\", function () {\r\n    const response = pm.response.json();\r\n\r\n    pm.expect(response).to.have.property(\"reason\");\r\n});\r\n\r\npm.test(\"Response tidak boleh memiliki token\", function () {\r\n    const response = pm.response.json();\r\n\r\n    pm.expect(response).to.not.have.property(\"token\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://restful-booker.herokuapp.com/auth",
+          "protocol": "https",
+          "host": [
+            "restful-booker",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "auth"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

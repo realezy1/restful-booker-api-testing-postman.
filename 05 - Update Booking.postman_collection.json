@@ -1,0 +1,309 @@
+{
+  "info": {
+    "_postman_id": "0085bcce-c36a-4a9f-b15f-b56d859ee2e3",
+    "name": "05 - Update Booking",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59383421",
+    "_collection_link": "https://go.postman.co/collection/59383421-0085bcce-c36a-4a9f-b15f-b56d859ee2e3?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Valid Data",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code harus 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Response harus berupa JSON\", function () {\r\n    pm.response.to.be.json;\r\n});\r\n\r\nconst response = pm.response.json();\r\n\r\npm.test(\"Firstname berhasil diperbarui\", function () {\r\n    pm.expect(response.firstname).to.eql(\"Aksal Updated\");\r\n});\r\n\r\npm.test(\"Lastname sesuai\", function () {\r\n    pm.expect(response.lastname).to.eql(\"Pratama\");\r\n});\r\n\r\npm.test(\"Total price berhasil diperbarui\", function () {\r\n    pm.expect(response.totalprice).to.eql(200000);\r\n});\r\n\r\npm.test(\"Deposit paid sesuai\", function () {\r\n    pm.expect(response.depositpaid).to.eql(true);\r\n});\r\n\r\npm.test(\"Booking dates berhasil diperbarui\", function () {\r\n    pm.expect(response.bookingdates.checkin).to.eql(\"2026-11-20\");\r\n    pm.expect(response.bookingdates.checkout).to.eql(\"2026-11-25\");\r\n});\r\n\r\npm.test(\"Additional needs berhasil diperbarui\", function () {\r\n    pm.expect(response.additionalneeds).to.eql(\"Breakfast and Dinner\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Cookie",
+            "value": "token={{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstname\": \"Aksal Updated\",\r\n    \"lastname\": \"Pratama\",\r\n    \"totalprice\": 200000,\r\n    \"depositpaid\": true,\r\n    \"bookingdates\": {\r\n        \"checkin\": \"2026-11-20\",\r\n        \"checkout\": \"2026-11-25\"\r\n    },\r\n    \"additionalneeds\": \"Breakfast and Dinner\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/booking/{{bookingId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "booking",
+            "{{bookingId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Partial Data",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code harus 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Response harus berupa JSON\", function () {\r\n    pm.response.to.be.json;\r\n});\r\n\r\nconst response = pm.response.json();\r\n\r\npm.test(\"Firstname berhasil diperbarui\", function () {\r\n    pm.expect(response.firstname).to.eql(\"Aksal PATCH\");\r\n});\r\n\r\npm.test(\"Additional needs berhasil diperbarui\", function () {\r\n    pm.expect(response.additionalneeds).to.eql(\r\n        \"Breakfast, Lunch, and Dinner\"\r\n    );\r\n});\r\n\r\npm.test(\"Lastname tidak berubah\", function () {\r\n    pm.expect(response.lastname).to.eql(\"Pratama\");\r\n});\r\n\r\npm.test(\"Total price tidak berubah\", function () {\r\n    pm.expect(response.totalprice).to.eql(200000);\r\n});\r\n\r\npm.test(\"Deposit paid tidak berubah\", function () {\r\n    pm.expect(response.depositpaid).to.eql(true);\r\n});\r\n\r\npm.test(\"Booking dates tidak berubah\", function () {\r\n    pm.expect(response.bookingdates.checkin).to.eql(\"2026-11-20\");\r\n    pm.expect(response.bookingdates.checkout).to.eql(\"2026-11-25\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Cookie",
+            "value": "token={{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstname\": \"Aksal PATCH\",\r\n    \"additionalneeds\": \"Breakfast, Lunch, and Dinner\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/booking/{{bookingId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "booking",
+            "{{bookingId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Missing Token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code harus 403\", function () {\r\n    pm.response.to.have.status(403);\r\n});\r\n\r\npm.test(\"Response menunjukkan akses ditolak\", function () {\r\n    pm.expect(pm.response.text()).to.include(\"Forbidden\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstname\": \"Unauthorized User\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/booking/{{bookingId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "booking",
+            "{{bookingId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Verify Data After Unauthorized Update",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code harus 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Firstname tidak berubah\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.firstname).to.eql(\"Aksal PATCH\");\r\n});\r\n\r\npm.test(\"Lastname tetap sama\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.lastname).to.eql(\"Pratama\");\r\n});\r\n\r\npm.test(\"Total price tidak berubah\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.totalprice).to.eql(200000);\r\n});\r\n\r\npm.test(\"Additional needs tidak berubah\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.additionalneeds).to.eql(\r\n        \"Breakfast, Lunch, and Dinner\"\r\n    );\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/booking/{{bookingId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "booking",
+            "{{bookingId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Invalid ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code harus 405\", function () {\r\n    pm.response.to.have.status(405);\r\n});\r\n\r\npm.test(\"Response menunjukkan method tidak diizinkan\", function () {\r\n    pm.expect(pm.response.text()).to.include(\"Method Not Allowed\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Cookie",
+            "value": "token={{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstname\": \"Invalid Booking Test\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/booking/999999999",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "booking",
+            "999999999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Invalid Data Type",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "console.log(\"Status Code:\", pm.response.code);\r\nconsole.log(\"Response Body:\", pm.response.text());\r\n\r\npm.test(\"Status code harus 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Response harus berupa JSON\", function () {\r\n    pm.response.to.be.json;\r\n});\r\n\r\nif (pm.response.code === 200) {\r\n    const response = pm.response.json();\r\n\r\n    pm.test(\"Total price harus berupa angka\", function () {\r\n        pm.expect(response.totalprice).to.be.a(\"number\");\r\n    });\r\n}\r\n\r\nconsole.log(\"Environment:\", pm.environment.name);\r\nconsole.log(\"Token tersedia:\", !!pm.environment.get(\"token\"));\r\nconsole.log(\"Token length:\", pm.environment.get(\"token\")?.length);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Cookie",
+            "value": "token={{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"totalprice\": \"dua ratus ribu\"\r\n}   ",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/booking/{{bookingId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "booking",
+            "{{bookingId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Data Verification",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/booking/{{bookingId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "booking",
+            "{{bookingId}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "info": {
+    "_postman_id": "8925effd-09a4-4297-add3-53fcb3a10fa9",
+    "name": "03 - Get Booking",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59383421",
+    "_collection_link": "https://go.postman.co/collection/59383421-8925effd-09a4-4297-add3-53fcb3a10fa9?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get /All Booking",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code harus 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Response berupa array\", function () {\r\n    const response = pm.response.json();\r\n\r\n    pm.expect(response).to.be.an(\"array\");\r\n});\r\n\r\npm.test(\"Setiap booking memiliki bookingid\", function () {\r\n    const response = pm.response.json();\r\n\r\n    response.forEach(function (booking) {\r\n        pm.expect(booking).to.have.property(\"bookingid\");\r\n    });\r\n});\r\n\r\npm.test(\"Booking ID harus berupa angka\", function () {\r\n    const response = pm.response.json();\r\n\r\n    response.forEach(function (booking) {\r\n        pm.expect(booking.bookingid).to.be.a(\"number\");\r\n    });\r\n});\r\n\r\npm.test(\"Booking data tidak boleh kosong\", function () {\r\n    const response = pm.response.json();\r\n\r\n    pm.expect(response).to.be.an(\"array\").that.is.not.empty;\r\n});\r\n\r\npm.test(\"Menampilkan total booking\", function () {\r\n    const response = pm.response.json();\r\n\r\n    const totalBooking = response.length;\r\n\r\n    console.log(\"Total Booking:\", totalBooking);\r\n\r\n    pm.expect(totalBooking).to.be.greaterThan(0);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://restful-booker.herokuapp.com/booking",
+          "protocol": "https",
+          "host": [
+            "restful-booker",
+            "herokuapp",
+            "com"
+          ],
+          "path": [
+            "booking"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
